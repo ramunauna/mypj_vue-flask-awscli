@@ -1,0 +1,35 @@
+version: '3'
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile_Flask
+    container_name: flask_container
+    tty: true
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "5000:5000"
+  vue:
+    build:
+      context: .
+      dockerfile: Dockerfile_Vuejs
+    image: vue_img
+    container_name: vue_container
+    tty: true
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "8080:8080"
+  aws-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile_AWS-CLI
+    container_name: awscli-container
+    volumes:
+      - .:/workdir
+    env_file:
+      - .env
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_DEFAULT_OUTPUT: json
