@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Static website hosting with S3
+
+Parameters:
+  Datetime:
+    Type: String
+
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: PublicRead
+      BucketName: !Sub my-pj-${Datetime}-s3-bucket
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: Allow
+            Resource: !Join
+              - ''
+              - - !GetAtt S3Bucket.Arn
+                - /*
+            Principal: '*'
+
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt S3Bucket.WebsiteURL
+    Description: URL for website hosted on S3
+  
+  S3BucketName:
+    Value: !Ref S3Bucket
+    Description: S3 Bucket name
+  
+  S3BucketArn:
+    Value: !GetAtt S3Bucket.Arn
+    Description: S3 Bucket Arn
