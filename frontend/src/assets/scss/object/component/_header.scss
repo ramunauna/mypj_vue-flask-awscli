@@ -1,0 +1,20 @@
+.header_div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #000;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 30px;
+    &-link {
+        ul {
+            display: flex;
+            li {
+                margin-left: 20px;
+                list-style: none;
+            }
+        }
+    }
+}

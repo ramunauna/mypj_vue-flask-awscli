@@ -1,0 +1,29 @@
+.header_div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #000;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 30px;
+}
+.header_div-link ul {
+  display: flex;
+}
+.header_div-link ul li {
+  margin-left: 20px;
+  list-style: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  margin: 10px 30px;
+}
+/*# sourceMappingURL=style.css.map */
