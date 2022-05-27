@@ -21,8 +21,7 @@ Resources:
             ]
             CustomOriginConfig:
               HTTPPort: 80
-              HTTPSPort: 443
-              OriginProtocolPolicy: match-viewer
+              OriginProtocolPolicy: http-only
         Enabled: true
         HttpVersion: http2
         DefaultRootObject: index.html
