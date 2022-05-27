@@ -1,4 +1,5 @@
 {
     "dartsass.targetDirectory": "frontend/src/assets/css",
-    "dartsass.outputFormat": "cssonly"
+    "dartsass.outputFormat": "cssonly",
+    "dartsass.sassBinPath": "frontend/node_modules/sass/sass.js"
 }
