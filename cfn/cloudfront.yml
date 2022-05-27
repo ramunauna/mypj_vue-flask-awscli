@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFront Distribution and Function for basic access authentication
 
-# Parameters:
-#   EncodedString:
-#     Type: String
+Parameters:
+  EncodedString:
+    Type: String
 
 Resources:
- CloudFrontDistribution:
+  CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
@@ -21,8 +21,10 @@ Resources:
             ]
             CustomOriginConfig:
               HTTPPort: 80
-              OriginProtocolPolicy: http-only
+              HTTPSPort: 443
+              OriginProtocolPolicy: match-viewer
         Enabled: true
+        HttpVersion: http2
         DefaultRootObject: index.html
         CustomErrorResponses:
           - ErrorCachingMinTTL: 300
@@ -37,3 +39,37 @@ Resources:
           MaxTTL: 300
           MinTTL: 300
           ViewerProtocolPolicy: redirect-to-https
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt CloudFrontFunction.FunctionARN
+    DependsOn: CloudFrontFunction
+
+  CloudFrontFunction:
+    Type: AWS::CloudFront::Function
+    Properties: 
+      AutoPublish: true
+      FunctionCode: !Sub |
+        function handler(event) {
+          var request = event.request;
+          var headers = request.headers;
+
+          var authString = "Basic ${EncodedString}";
+
+          if (
+            typeof headers.authorization === "undefined" ||
+            headers.authorization.value !== authString
+          ) {
+            return {
+              statusCode: 401,
+              statusDescription: "Unauthorized",
+              headers: { "www-authenticate": { value: "Basic" } }
+            }
+          }
+
+          return request;
+        }
+      
+      FunctionConfig:
+        Comment: "for basic authentication"
+        Runtime: cloudfront-js-1.0
+      Name: function-basic-authentication
