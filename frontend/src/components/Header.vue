@@ -5,9 +5,9 @@
         </div>
         <div class="header_div-link">
             <ul>
-                <li><router-link to="/">Home</router-link></li>
-                <li><router-link to="/">About</router-link></li>
-                <li><router-link to="/">Content</router-link></li>
+                <li><router-link to="/">link1</router-link></li>
+                <li><router-link to="/">link2</router-link></li>
+                <li><router-link to="/">link3</router-link></li>
             </ul>
         </div>
     </header>

@@ -34,11 +34,17 @@ Outputs:
   WebsiteURL:
     Value: !GetAtt S3Bucket.WebsiteURL
     Description: URL for website hosted on S3
+    Export:
+      Name: WebsiteURL
   
   S3BucketName:
     Value: !Ref S3Bucket
     Description: S3 Bucket name
+    Export:
+      Name: S3BucketName
   
   S3BucketArn:
     Value: !GetAtt S3Bucket.Arn
     Description: S3 Bucket Arn
+    Export:
+      Name: S3BucketArn
