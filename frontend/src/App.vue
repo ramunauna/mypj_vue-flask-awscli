@@ -17,7 +17,8 @@ export default {
     Header,
     Main,
     Footer
-  }
+  },
+  delimiters: ['[[',']]']
 }
 
 </script>
